@@ -1,0 +1,88 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 28.536870
+  longitude: -82.228800
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 28
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+  # Customization file
+  customize: !include customize.yaml
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+weather:
+  - platform: openweathermap
+    api_key: 81964be15508f34f75b4bf7073a0b8f3
+
+# Text to speech
+tts:
+  - platform: google
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+zone: !include zones.yaml
+
+nest:
+  client_id: bb5726a8-2abc-46b8-937c-07a2d162b37c
+  client_secret: x0cfGPrkp3XpGFTOOYLTy7Upl
+
+shell_command:
+  disco_off: echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/ttyACM0
+  disco_on: echo -e -n "\x01\x08\x00\xF2\x51\x01\x01\x05\x01\x50" > /dev/ttyACM0
+
+http:
+  base_url: https://welsted-ha.duckdns.org:8123
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  ssl_profile: intermediate
+
+frontend:
+  themes:  !include themes.yaml
+
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: https://welsted-ha.duckdns.org:3218
+
+device_tracker:
+  - platform: icloud3
+    username: cryogenx@gmail.com
+    password: Eew1109092019!
+    account_name: Welsted
+    include_device_types:
+    - iphone
+    - ipad
+    unit_of_measurement: mi
+    gps_accuracy_threshold: 75
+    inzone_interval: '2 hrs'
+    travel_time_factor: .6
+    hide_gps_coordinates: false
+    distance_method: waze
+    waze_region: US
+    waze_min_distance: 1
+    waze_max_distance: 9999
+    waze_realtime: False
+
+#  - platform: ddwrt
+#    host: 192.168.1.1
+#    username: cryogenx
+#    password: Eew1109092019!
+tuya:
+  username: 3522389249
+  password: Eew1109092017!
+  country_code: 1
+
+notify:
+  - name: Prowl
+    platform: prowl
+    api_key: afcf81c4c19ba99aafbd547cbf85e1f7ff51c821
+
+ios:
