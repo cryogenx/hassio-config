@@ -48,7 +48,7 @@ frontend:
 
 panel_iframe:
   configurator:
-    title: Configurator
+    title: Configuration
     icon: mdi:wrench
     url: https://welsted-ha.duckdns.org:3218
 
